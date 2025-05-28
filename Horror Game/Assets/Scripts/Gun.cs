@@ -38,6 +38,13 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("SHOOT");
             currentAmmoInMag--;
+            Ray crosshair = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            if (Physics.Raycast(crosshair, out RaycastHit hit))
+            {
+                Debug.Log("MAA KA BHOSADA AAGGGGGH");
+                Debug.Log(hit.collider.tag);
+                GameObject.Find(hit.collider.name).GetComponent<MeshRenderer>().material.color = Color.blue;
+            }
         }
         else
         {

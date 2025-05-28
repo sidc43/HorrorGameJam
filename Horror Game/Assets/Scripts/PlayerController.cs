@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    [Header("Attributes")]
+    public float maxHealth;
+    float health;
+    bool dead;
+
     [Header("Movement")]
     public float moveSpeed;
 
@@ -39,6 +43,8 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
+        health = maxHealth;
+        dead = false;
     }
 
     private void Update()
@@ -54,6 +60,13 @@ public class PlayerController : MonoBehaviour
             rb.linearDamping = groundDrag;
         else
             rb.linearDamping = 0;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(10);
+            Debug.Log(health);
+            Debug.Log(dead);
+        }
     }
 
     private void FixedUpdate()
@@ -67,7 +80,7 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
 
@@ -98,7 +111,7 @@ public class PlayerController : MonoBehaviour
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
         // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
@@ -115,5 +128,15 @@ public class PlayerController : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            dead = true;
+            Debug.Log(dead);
+        }
     }
 }
