@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour
     public int magazineCap = 30;
     public int reserve = 200;
     public int currentAmmoInMag = 30;
+    public float damage;
     public float reloadSpeed = 2f;
 
     bool isReloading = false;
@@ -36,14 +37,15 @@ public class Gun : MonoBehaviour
     {
         if (currentAmmoInMag > 0)
         {
-            Debug.Log("SHOOT");
             currentAmmoInMag--;
             Ray crosshair = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(crosshair, out RaycastHit hit))
             {
-                Debug.Log("MAA KA BHOSADA AAGGGGGH");
                 Debug.Log(hit.collider.tag);
-                GameObject.Find(hit.collider.name).GetComponent<MeshRenderer>().material.color = Color.blue;
+                if (hit.collider.CompareTag("enemy"))
+                {  
+                    GameObject.Find(hit.collider.name).GetComponent<Enemy>().TakeDamage(damage);
+                }
             }
         }
         else
