@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public float range;
     public float damage;
     public float speed;
-    public Camera cam;
+    public Transform orientation;
     public NavMeshAgent agent;
     [SerializeField] private BoxCollider rangeCollider;
     private bool targetting;
@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour
 
     public void Update()
     {
+        transform.rotation = orientation.rotation;
         if (targetting)
         {
             agent.SetDestination(FindObjectsByType<PlayerController>(FindObjectsSortMode.None)[0].gameObject.transform.position);
@@ -37,7 +38,6 @@ public class Enemy : MonoBehaviour
         Debug.Log(other.tag);
         if (other.CompareTag("Player"))
         {
-            Debug.Log("PLAYER IN RANGE");
             targetting = true;
         }
     }

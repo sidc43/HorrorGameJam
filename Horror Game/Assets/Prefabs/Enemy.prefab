@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 125486339568798425}
   - component: {fileID: 1686619433273696857}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Enemy
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,11 +125,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   health: 0
-  range: 10
+  range: 5
   damage: 10
   speed: 4
   cam: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 125486339568798425}
+  rangeCollider: {fileID: 1686619433273696857}
 --- !u!195 &125486339568798425
 NavMeshAgent:
   m_ObjectHideFlags: 0
